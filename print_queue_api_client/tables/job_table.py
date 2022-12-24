@@ -1,11 +1,22 @@
-from BaseTable import *
+from print_queue_api_client.tables.base_table import *
 
 
-class JobTable(BaseTable):
+class job_table(base_table):
     def __init__(self, base_url, header):
-        super().__init__(base_url=base_url, header=header, table_type='jobs')
+        super().__init__(base_url=base_url, header=header, table_type="jobs")
 
-    def create(self, gcode_slug, filament_usage, print_name, print_time, printer_type, project, user_id, rep_check=None, upload_notes=None):
+    def create(
+        self,
+        gcode_slug,
+        filament_usage,
+        print_name,
+        print_time,
+        printer_type,
+        project,
+        user_id,
+        rep_check=None,
+        upload_notes=None,
+    ):
         """
         # Usage:
         params = {
@@ -40,7 +51,7 @@ class JobTable(BaseTable):
             "print_time": print_time,
             "printer_type": printer_type,
             "project": project,
-            "user_id": user_id
+            "user_id": user_id,
         }
 
         if rep_check is not None:
@@ -51,9 +62,11 @@ class JobTable(BaseTable):
 
         # Request construction
         header = copy.deepcopy(self.header)
-        header['Content-Type'] = 'application/json'
+        header["Content-Type"] = "application/json"
 
-        return self._request_action(method='post', action='add', header=header, body=details)
+        return self._request_action(
+            method="post", action="add", header=header, body=details
+        )
 
     def review(self, job_id):
         """
@@ -61,7 +74,7 @@ class JobTable(BaseTable):
         :param int job_id: job ID
         :return:
         """
-        return self._request_action(method='put', action='review', url_suffix=job_id)
+        return self._request_action(method="put", action="review", url_suffix=job_id)
 
     def queue(self, job_id):
         """
@@ -69,7 +82,7 @@ class JobTable(BaseTable):
         :param int job_id: job ID
         :return:
         """
-        return self._request_action(method='put', action='queue', url_suffix=job_id)
+        return self._request_action(method="put", action="queue", url_suffix=job_id)
 
     def reject(self, job_id):
         """
@@ -77,7 +90,7 @@ class JobTable(BaseTable):
         :param int job_id: job ID
         :return:
         """
-        return self._request_action(method='put', action='reject', url_suffix=job_id)
+        return self._request_action(method="put", action="reject", url_suffix=job_id)
 
     def complete(self, job_id):
         """
@@ -85,7 +98,7 @@ class JobTable(BaseTable):
         :param int job_id: job ID
         :return:
         """
-        return self._request_action(method='put', action='complete', url_suffix=job_id)
+        return self._request_action(method="put", action="complete", url_suffix=job_id)
 
     def fail(self, job_id, requeue=False):
         """
@@ -97,19 +110,18 @@ class JobTable(BaseTable):
         url_suffix = f"{job_id}"
         if requeue is True:
             url_suffix += "?requeue=yes"
-        return self._request_action(method='put', action='fail', url_suffix=url_suffix)
+        return self._request_action(method="put", action="fail", url_suffix=url_suffix)
 
     def start(self, job_id, printer_id, colour="auto-print"):
-        details = {
-            "printer": printer_id,
-            "colour": colour
-        }
+        details = {"printer": printer_id, "colour": colour}
 
         # Request construction
         header = copy.deepcopy(self.header)
-        header['Content-Type'] = 'application/json'
+        header["Content-Type"] = "application/json"
 
-        return self._request_action(method='put', action='start', url_suffix=job_id, header=header, body=details)
+        return self._request_action(
+            method="put", action="start", url_suffix=job_id, header=header, body=details
+        )
 
     @result_to_df
     def get(self, key=None):
@@ -121,4 +133,4 @@ class JobTable(BaseTable):
         :param key: job ID <int>
         :return: Request response (converted to dataframe by decorator)
         """
-        return self._request_action(method='delete', action='delete', url_suffix=key)
+        return self._request_action(method="delete", action="delete", url_suffix=key)

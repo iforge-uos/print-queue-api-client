@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0", "pandas>=1.5.2", "requests>=2.28.1"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "print_queue_api_client"
+version = "0.0.6"
+authors = [
+  { name="iForge IT", email="it.iforge@sheffield.ac.uk"},
+  { name="Dom RG", email="22130302+domRG@users.noreply.github.com" },
+  { name="Sam Piper", email="contactme@sampiiiii.com" },
+]
+description = "Library to interface with the iForge Print Queue API"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas>=1.5.2",
+    "requests>=2.28.1",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/iforge-uos/print-queue-api-client"
+"Bug Tracker" = "https://github.com/iforge-uos/print-queue-api-client/issues"

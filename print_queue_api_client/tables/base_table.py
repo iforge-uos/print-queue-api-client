@@ -16,7 +16,8 @@ def log_request_details(func):  # add basic logging to requests
                 f"Request to {resp.url}\n"
                 f"\tStatus code {resp.status_code}, Reason: {resp.reason}\n"
                 f"\tContent: {resp.headers['Content-Type']}, len: {resp.headers['Content-Length']}\n"
-                f"\tTime: {(end - start):3f}s")
+                f"\tTime: {(end - start):3f}s"
+            )
         else:
             logging.error("log_request_details used on !Requests.Response()")
         return resp
@@ -27,13 +28,17 @@ def log_request_details(func):  # add basic logging to requests
 def input_to_lower(func):
     def wrapper(*args, **kwargs):
         lower_args = [a.lower() if isinstance(a, str) else a for a in args]
-        lower_kwargs = {k: (v.lower() if isinstance(v, str) else v) for k, v in kwargs.items()}
+        lower_kwargs = {
+            k: (v.lower() if isinstance(v, str) else v) for k, v in kwargs.items()
+        }
         return func(*lower_args, **lower_kwargs)
 
     return wrapper
 
 
-def interpret_response(func):  # convert request response (string) to variable (via json.loads)
+def interpret_response(
+    func,
+):  # convert request response (string) to variable (via json.loads)
     """
     iForge Request Response Standards:
     {
@@ -49,6 +54,7 @@ def interpret_response(func):  # convert request response (string) to variable (
         resp = func(*args, **kwargs)
         if isinstance(resp, rq.Response):
             details = json.loads(resp.text)
+            print(details)
             error = details["status"] != "success"
             data = details["data"]
             message = details["message"]
@@ -64,18 +70,18 @@ def interpret_response(func):  # convert request response (string) to variable (
 def result_to_df(func):  # convert returned result to dataframe
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-        if result['error']:
+        if result["error"]:
             logging.info(f"Got error, message={result['message']}")
             return None
         else:
-            raw_data = copy.deepcopy(result['data'])
-            result['data'] = pd.DataFrame(raw_data)
+            raw_data = copy.deepcopy(result["data"])
+            result["data"] = pd.DataFrame(raw_data)
             return result
 
     return wrapper
 
 
-class BaseTable:
+class base_table:
     def __init__(self, base_url, header, table_type):
         self.url = base_url + f"/{table_type}"
         self.header = header
@@ -95,26 +101,25 @@ class BaseTable:
 
         if url_suffix is None and method in ["post"]:
             response = rq.request(
-                method=method,
-                headers=header,
-                url=f'{self.url}/{action}',
-                data=data
+                method=method, headers=header, url=f"{self.url}/{action}", data=data
             )
         elif type(url_suffix) is str:  # it's an email
             response = rq.request(
                 method=method,
                 headers=header,
-                url=f'{self.url}/{action}/{url_suffix.lower()}',
-                data=data
+                url=f"{self.url}/{action}/{url_suffix.lower()}",
+                data=data,
             )
         elif type(url_suffix) is int:  # it's an id
             response = rq.request(
                 method=method,
                 headers=header,
-                url=f'{self.url}/{action}/{url_suffix}',
-                data=data
+                url=f"{self.url}/{action}/{url_suffix}",
+                data=data,
             )
         else:  # it's wrong
-            logging.error(f"'{url_suffix}' is an invalid unique identifier, cannot {action} {self.table_type}(s)")
+            logging.error(
+                f"'{url_suffix}' is an invalid unique identifier, cannot {action} {self.table_type}(s)"
+            )
             return None
         return response
