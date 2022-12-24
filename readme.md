@@ -1,4 +1,4 @@
-# iForge Print Queue API Client [![Version](https://badgen.net/pypi/v/print-queue-api-client/)](https://pypi.org/manage/project/print-queue-api-client)[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+# iForge Print Queue API Client [![Version](https://badgen.net/pypi/v/print-queue-api-client/)](https://pypi.org/project/print-queue-api-client/)[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
 
 ## About
