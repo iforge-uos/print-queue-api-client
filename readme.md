@@ -17,7 +17,7 @@ To use the client, import the client and create an instance of the client. The c
 import print_queue_api_client as api
 
 client = api.database_api_factory(
-    api_key="YOUR_API_KEY".
+    api_key="YOUR_API_KEY",
     server_ip="127.0.0.1",
     server_port="5000",
 )
