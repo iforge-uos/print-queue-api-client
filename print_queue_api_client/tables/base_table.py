@@ -54,7 +54,6 @@ def interpret_response(
         resp = func(*args, **kwargs)
         if isinstance(resp, rq.Response):
             details = json.loads(resp.text)
-            print(details)
             error = details["status"] != "success"
             data = details["data"]
             message = details["message"]

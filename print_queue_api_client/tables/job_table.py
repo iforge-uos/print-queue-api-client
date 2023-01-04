@@ -5,6 +5,10 @@ class job_table(base_table):
     def __init__(self, base_url, header):
         super().__init__(base_url=base_url, header=header, table_type="jobs")
 
+    @result_to_df
+    def get(self, key=None):
+        return self._request_action(method="get", action="view", url_suffix=key)
+
     def create(
         self,
         gcode_slug,
@@ -122,10 +126,6 @@ class job_table(base_table):
         return self._request_action(
             method="put", action="start", url_suffix=job_id, header=header, body=details
         )
-
-    @result_to_df
-    def get(self, key=None):
-        return self._request_action(method="get", action="view", url_suffix=key)
 
     def delete(self, key=None):
         """
