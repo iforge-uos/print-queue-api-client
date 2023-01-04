@@ -42,9 +42,9 @@ def interpret_response(
     """
     iForge Request Response Standards:
     {
-      "status": "success"/"error",
-      "data": { Success-specific data (eg application) / None or optional error payload },
-      "message": { None or optional success message / Error-specific data (eg debug) }
+        "status": "success"/"error",
+        "data": {{ Success-specific data (eg application) / None or optional error payload }},
+        "message": {{ None or optional success message / Error-specific data (eg debug) }}
     }
 
     :return (bool error, str data, str message):
