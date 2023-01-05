@@ -11,6 +11,7 @@ class user_table(base_table):
 
     def create(
         self,
+        username,
         email,
         name,
         short_name=None,
@@ -19,7 +20,7 @@ class user_table(base_table):
         score_editable=None,
     ):
         # User details construction
-        details = {"email": email, "name": name, "short_name": short_name}
+        details = {"username": username, "email": email, "name": name, "short_name": short_name}
 
         if user_score is not None:
             details["user_score"] = user_score
