@@ -16,9 +16,9 @@ To use the client, import the client and create an instance of the client. The c
 It is important to note, we employ a standardised Requests response in the following form:
 ```python
 """
-iForge Request Response Standards:
+iForge Interpreted Response Standards:
 {
-    "status": "success"/"error",
+    "error": True/False,
     "data": {{ Success-specific data (eg application) / None or optional error payload }},
     "message": {{ None or optional success message / Error-specific data (eg debug) }}
 }
