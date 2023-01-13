@@ -71,11 +71,10 @@ def result_to_df(func):  # convert returned result to dataframe
         result = func(*args, **kwargs)
         if result["error"]:
             logging.info(f"Got error, message={result['message']}")
-            return None
         else:
             raw_data = copy.deepcopy(result["data"])
             result["data"] = pd.DataFrame(raw_data)
-            return result
+        return result
 
     return wrapper
 
