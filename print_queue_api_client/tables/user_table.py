@@ -20,7 +20,10 @@ class user_table(base_table):
         score_editable=None,
     ):
         # User details construction
-        details = {"username": username, "email": email, "name": name, "short_name": short_name}
+        details = {"username": username, "email": email, "name": name}
+
+        if short_name is not None:
+            details["short_name"] = short_name
 
         if user_score is not None:
             details["user_score"] = user_score
