@@ -72,8 +72,9 @@ def result_to_df(func):  # convert returned result to dataframe
         if result["error"]:
             logging.info(f"Got error, message={result['message']}")
         else:
-            raw_data = copy.deepcopy(result["data"])
-            result["data"] = pd.DataFrame(raw_data)
+            if not isinstance(result["data"], list):
+                result["data"] = [result["data"]]
+            result["data"] = pd.DataFrame(result["data"])
         return result
 
     return wrapper
