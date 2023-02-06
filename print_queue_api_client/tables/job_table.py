@@ -9,60 +9,19 @@ class job_table(base_table):
     def get(self, key=None):
         return self._request_action(method="get", action="view", url_suffix=key)
 
-    def create(
-        self,
-        gcode_slug,
-        filament_usage,
-        print_name,
-        print_time,
-        printer_type,
-        project,
-        user_id,
-        rep_check=None,
-        upload_notes=None,
-    ):
-        """
-        # Usage:
-        params = {
-            "gcode_slug": <str>,
-            "filament_usage": <int>,
-            "print_name": <str>,
-            "print_time": <int>,
-            "printer_type": <str>,
-            "project": <str>,
-            "user_id": <int>,
-            "rep_check": <int>,
-            "upload_notes": <str>
-        }
-        create(**params)
+    def create(self, **kwargs):
 
-        # or
-        :param str gcode_slug:
-        :param int filament_usage:
-        :param str print_name:
-        :param int print_time:
-        :param str printer_type:
-        :param str project:
-        :param int user_id:
-        :param int rep_check:
-        :param str upload_notes:
-        :return:
-        """
-        details = {
-            "gcode_slug": gcode_slug,
-            "filament_usage": filament_usage,
-            "print_name": print_name,
-            "print_time": print_time,
-            "printer_type": printer_type,
-            "project": project,
-            "user_id": user_id,
-        }
+        required_args = ["gcode_slug", "filament_usage", "print_name", "print_time", "printer_type", "project",
+                         "user_id"]
+        optional_args = ["colour", "date_added", "date_started", "date_ended", "printer", "project_string",
+                         "queue_notes", "rep_check", "status", "stl_slug", "upload_notes"]
 
-        if rep_check is not None:
-            details["rep_check"] = rep_check
+        # check if all required arguments are provided
+        if not all(arg in kwargs for arg in required_args):
+            raise ValueError("Missing required argument(s)")
 
-        if upload_notes is not None:
-            details["upload_notes"] = upload_notes
+        # create a dictionary with the provided arguments
+        details = {arg: kwargs[arg] for arg in kwargs if arg in required_args + optional_args}
 
         # Request construction
         header = copy.deepcopy(self.header)
