@@ -118,7 +118,7 @@ class base_table:
             )
         else:  # it's wrong
             logging.error(
-                f"'{url_suffix}' is an invalid unique identifier, cannot {action} {self.table_type}(s)"
+                f"'{url_suffix}' (type: {type(url_suffix)}) is an invalid unique identifier (int/str), cannot {action} {self.table_type}(s)"
             )
             return None
         return response

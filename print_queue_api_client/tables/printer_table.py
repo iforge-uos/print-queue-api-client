@@ -12,11 +12,11 @@ class PrinterTable(base_table):
     def create(self, printer_name, printer_type, ip, api_key, location):
         # User details construction
         details = {
-            "printer_name": printer_name,
-            "printer_type": printer_type,
+            "printer_name": printer_name.lower(),
+            "printer_type": printer_type.lower(),
             "ip": ip,
             "api_key": api_key,
-            "location": location,
+            "location": location.lower(),
         }
 
         # Request construction
