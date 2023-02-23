@@ -36,9 +36,7 @@ def input_to_lower(func):
     return wrapper
 
 
-def interpret_response(
-    func,
-):  # convert request response (string) to variable (via json.loads)
+def interpret_response(func):  # convert request response (string) to variable (via json.loads)
     """
     iForge Request Response Standards:
     {

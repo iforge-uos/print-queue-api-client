@@ -3,6 +3,7 @@ from print_queue_api_client.tables.base_table import *
 
 MAX_PRINT_NAME_CHARS = 96
 
+
 class job_table(base_table):
     def __init__(self, base_url, header):
         super().__init__(base_url=base_url, header=header, table_type="jobs")
@@ -28,7 +29,7 @@ class job_table(base_table):
         if len(details['print_name']) > MAX_PRINT_NAME_CHARS:
             filename, settings, extension = re.split(r'_(?=\d\.\d*mm_)|_(?=\d*h*\d*m*\.gcode)', details['print_name'])
             used_chars = len(f"..._{settings}_{extension}")
-            details['print_name'] = f"{filename[:MAX_PRINT_NAME_CHARS-used_chars]}..._{settings}_{extension}"
+            details['print_name'] = f"{filename[:MAX_PRINT_NAME_CHARS - used_chars]}..._{settings}_{extension}"
 
         # Request construction
         header = copy.deepcopy(self.header)
